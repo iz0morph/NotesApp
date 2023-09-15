@@ -1,5 +1,6 @@
 import json
 from Note import Note, Notes
+from datetime import datetime
 
 
 class FileHandler:
@@ -15,8 +16,9 @@ class FileHandler:
             notes = obj['notes']
             for i in notes:
                 note = Note(id=i.get('id'), content=i.get('Content'),
-                            name=i.get('Name'), creation_date=i.get(
-                        'Creation Date'))
+                            name=i.get('Name'),
+                            creation_date=datetime.strptime(i.get(
+                                'Creation Date'), '%Y-%m-%d').date())
                 array.append(note)
         return array
 

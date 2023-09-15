@@ -1,5 +1,6 @@
 from Menu import Menu
 from Service import Service
+from datetime import datetime
 
 
 class Console:
@@ -9,13 +10,11 @@ class Console:
         self.__service = Service()
         self.__work = True
 
-
     def run(self):
         print("Привет, выбери действие:")
         while self.__work:
             self.__menu.print_menu()
             self.scan()
-
 
     def scan(self):
         command = input()
@@ -43,7 +42,7 @@ class Console:
     def delete_note(self):
         id = input("Введите id заметки")
         if self.check_text_for_int(id):
-            self.__service.delete_note(id)
+            self.__service.delete_note(int(id))
         else:
             print("Введено не число")
 
@@ -68,17 +67,15 @@ class Console:
     def date_filter(self):
         earlier_date = input("Введите начальную дату поиска в формате: Y-m-d")
         later_date = input("Введите конечную дату поиска: Y-m-d")
-        format_string = '%Y-%m-%d'
-        # try:
-        #     date_1 = earlier_date.strftime(format_string)
-        #     date_2 = later_date.strftime(format_string)
-        self.__service.date_filter(earlier_date, later_date)
-        # except IOError as e:
-        #     print("Неверный ввод даты")
+        try:
+            date_1 = datetime.strptime(earlier_date, '%Y-%m-%d').date()
+            date_2 = datetime.strptime(later_date, '%Y-%m-%d').date()
+        except Exception as e:
+            print("Неверный ввод даты")
+        self.__service.date_filter(date_1, date_2)
 
     def stop_working(self):
-        self.__work=False
+        self.__work = False
 
     def delete_all(self):
         self.__service.delete_all()
-
