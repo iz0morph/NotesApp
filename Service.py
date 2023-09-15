@@ -8,8 +8,9 @@ class Service:
         self.__file_handler = FileHandler()
         a = Notes()
         array = self.__file_handler.restore_notes()
-        for i in array:
-            a.add_note(i)
+        if len(array)!=0:
+            for i in array:
+                a.add_note(i)
         self.__notes = a
 
     def show_all(self):

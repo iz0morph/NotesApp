@@ -14,12 +14,13 @@ class FileHandler:
         with open("notes.json", "r", encoding='utf-8') as file:
             obj = json.load(file)
             notes = obj['notes']
-            for i in notes:
-                note = Note(id=i.get('id'), content=i.get('Content'),
-                            name=i.get('Name'),
-                            creation_date=datetime.strptime(i.get(
-                                'Creation Date'), '%Y-%m-%d').date())
-                array.append(note)
+            if len(notes)!=0:
+                for i in notes:
+                    note = Note(id=i.get('id'), content=i.get('Content'),
+                                name=i.get('Name'),
+                                creation_date=datetime.strptime(i.get(
+                                    'Creation Date'), '%Y-%m-%d').date())
+                    array.append(note)
         return array
 
     def write_note(self, note: Note):
